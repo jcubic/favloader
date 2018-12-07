@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Example of Favloader</title>
+    <meta name="Description" content=""/>
+    <!--[if IE]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link rel="icon" type="image/x-icon" href="favicon.ico"/>
+    <script src="../favloader.js"></script>
+    <script>
+     window.onload = function() {
+         favloader.init({
+             color: 'red'
+         });
+         var enabled = false;
+         document.querySelector('button').addEventListener('click', function() {
+             if (!enabled) {
+                 favloader.start();
+             } else {
+                 favloader.stop();
+             }
+             enabled = !enabled;
+         });
+     };
+    </script>
+</head>
+<body>
+  <button>Toggle</button>
+</body>
+</html>
