@@ -1,6 +1,8 @@
 /**@license
  *
- * favloader - Vanilla JavaScript library for loading animation in favicon v. 0.2.1
+ * favloader v. 0.2.2
+ *
+ * Vanilla JavaScript library for loading animation in favicon
  *
  * Copyright (c) 2018 Jakub Jankiewicz <https://jcubic.pl/me>
  * Released under the MIT license
@@ -140,7 +142,7 @@
         }, options);
 
         c = document.createElement('canvas');
-        c.width = c.height = settings.favicon_size;
+        c.width = c.height = settings.size;
         c.style.position = 'absolute';
         c.style.left = '-100px';
         document.body.appendChild(c);
@@ -156,7 +158,7 @@
             icon = link.getAttribute('href');
         }
         ctx.lineCap = "round";
-        ctx.lineWidth = settings.line_width;
+        ctx.lineWidth = settings.thickness;
         ctx.strokeStyle = settings.color;
         duration = settings.duration;
         if (delay) {
@@ -203,9 +205,9 @@
     function draw() {
         var position = progress % duration / duration;
 
-        ctx.clearRect(0, 0, settings.favicon_size, settings.favicon_size);
+        ctx.clearRect(0, 0, settings.size, settings.size);
         ctx.beginPath();
-        var center = Math.round(settings.favicon_size / 2);
+        var center = Math.round(settings.size / 2);
         ctx.arc(center, center, settings.radius, arcStart(position), arcEnd(position));
         ctx.stroke();
         update();
