@@ -1,12 +1,12 @@
 /**@license
  *
- * favloader - Vanilla JavaScript library for loading animation in favicon
+ * favloader - Vanilla JavaScript library for loading animation in favicon v. 0.2.0
  *
- * Copyright (c) 2018 Jakub Jankiewicz <http://jcubic.pl/me>
+ * Copyright (c) 2018 Jakub Jankiewicz <https://jcubic.pl/me>
  * Released under the MIT license
  *
  */
-/* global define, module, global, Worker, Blob, BlobBuilder */
+/* global define, module, global, Worker, Blob, BlobBuilder, setTimeout */
 (function(factory) {
     var root = typeof window !== 'undefined' ? window : global;
     if (typeof define === 'function' && define.amd) {
@@ -119,11 +119,22 @@
         visibilityChange = "webkitvisibilitychange";
     }
 
-    var ctx, c, link, icon, id, progress = 0, duration;
+    var ctx, c, link, icon, id, progress = 0, duration, initialized, settings, delay;
     function init(options) {
-        var settings = Object.assign({
-            favicon_size: 16,
-            line_width: 2,
+        if (!document || !document.body) {
+            setTimeout(function() {
+                init(options);
+            }, 100);
+            return;
+        }
+        if (initialized) {
+            throw new Error('You can init only once');
+        }
+        initialized = true;
+        settings = Object.assign({
+            size: 16,
+            radius: 6,
+            thickness: 2,
             color: '#0F60A8',
             duration: 5000
         }, options);
@@ -148,6 +159,10 @@
         ctx.lineWidth = settings.line_width;
         ctx.strokeStyle = settings.color;
         duration = settings.duration;
+        if (delay) {
+            delay();
+            delay = undefined;
+        }
     }
     var interval_id;
     function restore() {
@@ -159,6 +174,10 @@
         interval.clear(interval_id);
     }
     function animate() {
+        if (!initialized) {
+            delay = animate;
+            return;
+        }
         progress = 0;
         interval_id = interval.set(draw);
     }
@@ -184,9 +203,10 @@
     function draw() {
         var position = progress % duration / duration;
 
-        ctx.clearRect(0, 0, 16, 16);
+        ctx.clearRect(0, 0, settings.favicon_size, settings.favicon_size);
         ctx.beginPath();
-        ctx.arc(8, 8, 6, arcStart(position), arcEnd(position));
+        var center = Math.round(settings.favicon_size / 2);
+        ctx.arc(center, center, settings.radius, arcStart(position), arcEnd(position));
         ctx.stroke();
         update();
         progress += duration / 100;

@@ -9,24 +9,22 @@
     <![endif]-->
     <link rel="icon" type="image/x-icon" href="favicon.ico"/>
     <script src="../favloader.js"></script>
-    <script>
-     window.onload = function() {
-         favloader.init({
-             color: 'red'
-         });
-         var enabled = false;
-         document.querySelector('button').addEventListener('click', function() {
-             if (!enabled) {
-                 favloader.start();
-             } else {
-                 favloader.stop();
-             }
-             enabled = !enabled;
-         });
-     };
-    </script>
 </head>
 <body>
   <button>Toggle</button>
+  <script>
+   favloader.init({
+       color: 'red'
+   });
+   var enabled = false;
+   document.querySelector('button').addEventListener('click', function() {
+       if (!enabled) {
+           favloader.start();
+       } else {
+           favloader.stop();
+       }
+       enabled = !enabled;
+   });
+  </script>
 </body>
 </html>
