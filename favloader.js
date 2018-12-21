@@ -1,6 +1,6 @@
 /**@license
  *
- * favloader - Vanilla JavaScript library for loading animation in favicon v. 0.2.0
+ * favloader - Vanilla JavaScript library for loading animation in favicon v. 0.2.1
  *
  * Copyright (c) 2018 Jakub Jankiewicz <https://jcubic.pl/me>
  * Released under the MIT license
