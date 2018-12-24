@@ -1,6 +1,6 @@
 /**@license
  *
- * favloader v. 0.2.2
+ * favloader v. 0.3.0
  *
  * Vanilla JavaScript library for loading animation in favicon
  *
@@ -8,7 +8,7 @@
  * Released under the MIT license
  *
  */
-/* global define, module, global, Worker, Blob, BlobBuilder, setTimeout */
+/* global define, module, global, Worker, Blob, BlobBuilder, setTimeout, parseGIF */
 (function(factory) {
     var root = typeof window !== 'undefined' ? window : global;
     if (typeof define === 'function' && define.amd) {
@@ -121,18 +121,8 @@
         visibilityChange = "webkitvisibilitychange";
     }
 
-    var ctx, c, link, icon, id, progress = 0, duration, initialized, settings, delay;
+    var ctx, c, link, icon, id, progress = 0, duration, initialized, settings, gif;
     function init(options) {
-        if (!document || !document.body) {
-            setTimeout(function() {
-                init(options);
-            }, 100);
-            return;
-        }
-        if (initialized) {
-            throw new Error('You can init only once');
-        }
-        initialized = true;
         settings = Object.assign({
             size: 16,
             radius: 6,
@@ -141,29 +131,35 @@
             duration: 5000
         }, options);
 
-        c = document.createElement('canvas');
-        c.width = c.height = settings.size;
-        c.style.position = 'absolute';
-        c.style.left = '-100px';
-        document.body.appendChild(c);
-
-        ctx = c.getContext('2d');
-
-        link = document.querySelector('link[rel*="icon"]');
         if (!link) {
-            link = document.createElement('link');
-            link.setAttribute('rel', 'icon');
-            document.head.appendChild(link);
-        } else {
-            icon = link.getAttribute('href');
+            link = document.querySelector('link[rel*="icon"]');
+            if (!link) {
+                link = document.createElement('link');
+                link.setAttribute('rel', 'icon');
+                document.head.appendChild(link);
+            } else {
+                icon = link.getAttribute('href');
+            }
         }
-        ctx.lineCap = "round";
-        ctx.lineWidth = settings.thickness;
-        ctx.strokeStyle = settings.color;
-        duration = settings.duration;
-        if (delay) {
-            delay();
-            delay = undefined;
+
+        if (settings.gif) {
+            if (typeof parseGIF === 'undefined') {
+                throw new Error('parseGIF not defined, please include parseGIF.js file');
+            }
+            parseGIF(settings.gif).then(function(data) {
+                gif = data;
+            });
+        } else {
+            if (!c) {
+                c = document.createElement('canvas');
+                c.width = c.height = settings.size;
+                ctx = c.getContext('2d');
+            }
+
+            ctx.lineCap = "round";
+            ctx.lineWidth = settings.thickness;
+            ctx.strokeStyle = settings.color;
+            duration = settings.duration;
         }
     }
     var interval_id;
@@ -176,18 +172,33 @@
         interval.clear(interval_id);
     }
     function animate() {
-        if (!initialized) {
-            delay = animate;
+        if (!document || !document.head) {
+            setTimeout(animate, 100);
             return;
         }
         progress = 0;
-        interval_id = interval.set(draw);
+        if (settings.gif && parseGIF) {
+            if (!gif) {
+                setTimeout(animate, 100);
+                return;
+            }
+            interval_id = interval.set(animateGIF);
+        } else {
+            interval_id = interval.set(draw);
+        }
     }
     var startTime;
 
     var initialTurns = -.25;
     function turn(x) {
         return (x + initialTurns) * 2 * Math.PI;
+    }
+    function animateGIF() {
+        progress++;
+        if (progress >= gif.uris.length) {
+            progress = 0;
+        }
+        update(gif.uris[progress]);
     }
     function arcStart(pos) {
         return turn(pos + initialTurns) + turn(Math.max(0, pos * 2 - 1));
@@ -196,21 +207,20 @@
         return turn(pos + initialTurns) + turn(Math.min(1, pos * 2));
     }
     var start_angle = 1.5 * Math.PI, raf, percent = 0;
-    function update() {
+    function update(dataURI) {
         var newIcon, icon = document.querySelector('link[rel*="icon"]');
-        (newIcon = icon.cloneNode(true)).setAttribute('href',ctx.canvas.toDataURL());
+        (newIcon = icon.cloneNode(true)).setAttribute('href', dataURI);
         icon.parentNode.replaceChild(newIcon, icon);
         link = newIcon;
     }
     function draw() {
         var position = progress % duration / duration;
-
         ctx.clearRect(0, 0, settings.size, settings.size);
         ctx.beginPath();
         var center = Math.round(settings.size / 2);
         ctx.arc(center, center, settings.radius, arcStart(position), arcEnd(position));
         ctx.stroke();
-        update();
+        update(ctx.canvas.toDataURL());
         progress += duration / 100;
     }
 

@@ -9,14 +9,36 @@
     <![endif]-->
     <link rel="icon" type="image/x-icon" href="favicon.ico"/>
     <script src="../favloader.js"></script>
+    <script src="../parseGIF.js"></script>
 </head>
 <body>
+  <select>
+    <option selected value="gen">generated</option>
+    <option value="gif">gif</option>
+  </select>
   <button>Toggle</button>
   <script>
    favloader.init({
        color: 'red'
    });
    var enabled = false;
+   document.querySelector('select').addEventListener('change', function(e) {
+       if (enabled) {
+           favloader.stop();
+       }
+       if (e.target.value == 'gif') {
+           favloader.init({
+               gif: 'loader.gif'
+           });
+       } else {
+           favloader.init({
+               color: 'red'
+           });
+       }
+       if (enabled) {
+           favloader.start();
+       }
+   });
    document.querySelector('button').addEventListener('click', function() {
        if (!enabled) {
            favloader.start();
