@@ -88,6 +88,6 @@ To restore the icon properly, after stop, you need to include default favicon:
 
 ## License
 
-Copyright (c) 2018 Jakub Jankiewicz <https://jcubic.pl/me>
+Copyright (c) 2018 Jakub T. Jankiewicz <https://jcubic.pl/me>
 
 Released under the MIT license

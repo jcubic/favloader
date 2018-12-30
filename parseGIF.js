@@ -1,6 +1,6 @@
 /*
  * part of Favloader library
- * Copyright (C) 2018 Jakub Jankiewicz <https://jcubic.pl>
+ * Copyright (C) 2018 Jakub T. Jankiewicz <https://jcubic.pl>
  *
  * Based on https://github.com/shachaf/jsgif
  * Copyright (c) 2011 Shachaf Ben-Kiki

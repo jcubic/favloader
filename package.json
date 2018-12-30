@@ -15,7 +15,7 @@
     "browser",
     "web worker"
   ],
-  "author": "Jakub Jankiewicz <jcubic@onet.pl> (https://jcubic.pl/)",
+  "author": "Jakub T. Jankiewicz <jcubic@onet.pl> (https://jcubic.pl/)",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/jcubic/favloader/issues"

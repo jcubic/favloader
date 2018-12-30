@@ -3,7 +3,7 @@
   "description": "Favicon Vanilla JavaScript loader animation that work when tab is not active",
   "main": "favloader.js",
   "authors": [
-    "Jakub Jankiewicz <jcubic@onet.pl> (https://jcubic.pl/)"
+    "Jakub T. Jankiewicz <jcubic@onet.pl> (https://jcubic.pl/)"
   ],
   "license": "MIT",
   "keywords": [
