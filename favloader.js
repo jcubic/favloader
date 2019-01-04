@@ -34,14 +34,16 @@
         try {
             blob = new Blob([str], {type: 'application/javascript'});
         } catch (e) { // Backwards-compatibility
-            window.BlobBuilder = window.BlobBuilder || window.WebKitBlobBuilder || window.MozBlobBuilder;
+            window.BlobBuilder = window.BlobBuilder ||
+                window.WebKitBlobBuilder ||
+                window.MozBlobBuilder;
             blob = new BlobBuilder();
             blob.append(str);
             blob = blob.getBlob();
         }
         return new Worker(URL.createObjectURL(blob));
     }
-
+    // ----------------------------------------------------------------------------------
     var interval = (function() {
         var worker = fworker(function() {
             // rAF polyfil without setTimeout, ref: https://gist.github.com/paulirish/1579671
@@ -106,6 +108,7 @@
             }
         };
     })();
+    // ----------------------------------------------------------------------------------
 
     var hidden, visibilityChange;
     if (typeof document.hidden !== "undefined") { // Opera 12.10 and Firefox 18 and later support
@@ -118,9 +121,37 @@
         hidden = "webkitHidden";
         visibilityChange = "webkitvisibilitychange";
     }
-
-    var ctx, c, link, icon, id, progress = 0, duration, initialized, settings, gif;
+    // ----------------------------------------------------------------------------------
+    function warn(message) {
+      if (console && console.warn) {
+          console.warn(message);
+      } else {
+        setTimeout(function() {
+          throw new Error(message);
+        }, 0);
+      }
+    }
+    // ----------------------------------------------------------------------------------
+    var ctx,
+        c,
+        link,
+        icon,
+        id,
+        progress = 0,
+        duration,
+        initialized,
+        settings,
+        gif,
+        initialized,
+        type,
+        initial_turns = -.25,
+        interval_id;
+    // ----------------------------------------------------------------------------------
     function init(options) {
+        if (document.readyState !== "complete") {
+            setTimeout(init.bind(this, options), 100);
+            return;
+        }
         settings = Object.assign({
             size: 16,
             radius: 6,
@@ -131,12 +162,15 @@
 
         if (!link) {
             link = document.querySelector('link[rel*="icon"]');
+            console.log(link);
             if (!link) {
                 link = document.createElement('link');
                 link.setAttribute('rel', 'icon');
                 document.head.appendChild(link);
+                warn("No default icon found, restore state will not work");
             } else {
                 icon = link.getAttribute('href');
+                type = link.getAttribute('type');
             }
         }
 
@@ -159,18 +193,21 @@
             ctx.strokeStyle = settings.color;
             duration = settings.duration;
         }
+        initialized = true;
     }
-    var interval_id;
+    // ----------------------------------------------------------------------------------
     function restore() {
         if (icon) {
             link.setAttribute('href', icon + '?' + Date.now());
+            link.setAttribute('type', type);
         } else {
             link.parentNode.removeChild(link);
         }
         interval.clear(interval_id);
     }
+    // ----------------------------------------------------------------------------------
     function animate() {
-        if (!document || !document.head) {
+        if (!initialized) {
             setTimeout(animate, 100);
             return;
         }
@@ -185,12 +222,11 @@
             interval_id = interval.set(draw, 20);
         }
     }
-    var startTime;
-
-    var initialTurns = -.25;
+    // ----------------------------------------------------------------------------------
     function turn(x) {
-        return (x + initialTurns) * 2 * Math.PI;
+        return (x + initial_turns) * 2 * Math.PI;
     }
+    // ----------------------------------------------------------------------------------
     function animateGIF() {
         progress++;
         if (progress >= gif.uris.length) {
@@ -198,19 +234,22 @@
         }
         update(gif.uris[progress]);
     }
+    // ----------------------------------------------------------------------------------
     function arcStart(pos) {
-        return turn(pos + initialTurns) + turn(Math.max(0, pos * 2 - 1));
+        return turn(pos + initial_turns) + turn(Math.max(0, pos * 2 - 1));
     }
+    // ----------------------------------------------------------------------------------
     function arcEnd(pos) {
-        return turn(pos + initialTurns) + turn(Math.min(1, pos * 2));
+        return turn(pos + initial_turns) + turn(Math.min(1, pos * 2));
     }
-    var start_angle = 1.5 * Math.PI, raf, percent = 0;
+    // ----------------------------------------------------------------------------------
     function update(dataURI) {
         var newIcon, icon = document.querySelector('link[rel*="icon"]');
         (newIcon = icon.cloneNode(true)).setAttribute('href', dataURI);
         icon.parentNode.replaceChild(newIcon, icon);
         link = newIcon;
     }
+    // ----------------------------------------------------------------------------------
     function draw() {
         var position = progress % duration / duration;
         ctx.clearRect(0, 0, settings.size, settings.size);
@@ -221,7 +260,7 @@
         update(ctx.canvas.toDataURL());
         progress += duration / 100;
     }
-
+    // ----------------------------------------------------------------------------------
     return {
         init: init,
         start: animate,
