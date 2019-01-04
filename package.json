@@ -1,6 +1,6 @@
 {
   "name": "favloader",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Favicon Vanilla JavaScript loader animation that work when tab is not active",
   "main": "favloader.js",
   "repository": {
@@ -12,6 +12,7 @@
     "icon",
     "canvas",
     "animation",
+    "gif",
     "browser",
     "web worker"
   ],
