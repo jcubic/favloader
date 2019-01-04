@@ -87,6 +87,29 @@ To restore the icon properly, after stop, you need to include default favicon:
 <link rel="icon" type="image/x-icon" href="favicon.ico"/>
 ```
 
+## Changelog
+
+### 0.3.1
+* fix for MacOSX/Chrome
+* fix initialization before DOM is ready
+
+### 0.3.0
+* GIF animation support
+
+### 0.2.2
+* option fix
+
+### 0.2.1
+* npm fix
+
+### 0.2.0
+* make it work without onload
+* change API options
+
+### 0.1.0
+* inital version
+
+
 ## License
 
 Copyright (c) 2018-2019 Jakub T. Jankiewicz <https://jcubic.pl/me>
