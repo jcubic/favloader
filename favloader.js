@@ -1,10 +1,10 @@
 /**@license
  *
- * favloader v. 0.3.0
+ * favloader v. 0.3.1
  *
  * Vanilla JavaScript library for loading animation in favicon
  *
- * Copyright (c) 2018 Jakub T. Jankiewicz <https://jcubic.pl/me>
+ * Copyright (c) 2018-2019 Jakub T. Jankiewicz <https://jcubic.pl/me>
  * Released under the MIT license
  *
  */
@@ -60,14 +60,12 @@
                 }
                 if (data.method == 'setInterval') {
                     var interval_id = data.params[0];
-                    raf[interval_id] = self.requestAnimationFrame(function frame() {
+                    raf[interval_id] = self.setInterval(function() {
                         self.postMessage({ type: 'interval', id: interval_id });
-                        if (raf[interval_id] !== undefined) {
-                            raf[interval_id] = self.requestAnimationFrame(frame);
-                        }
-                    });
+                    }, data.params[1]);
                     self.postMessage({ type: 'RPC', id: id, result: interval_id });
                 } else if (data.method == 'clearInterval') {
+                    self.clearInterval(raf[data.params[0]]);
                     delete raf[data.params[0]];
                 }
             });
@@ -96,10 +94,10 @@
             }
         });
         return {
-            set: function(fn) {
+            set: function(fn, interval) {
                 var interval_id = Date.now();
                 callbacks[interval_id] = fn;
-                rpc('setInterval', [interval_id]);
+                rpc('setInterval', [interval_id, interval]);
                 return interval_id;
             },
             clear: function(id) {
@@ -182,9 +180,9 @@
                 setTimeout(animate, 100);
                 return;
             }
-            interval_id = interval.set(animateGIF);
+            interval_id = interval.set(animateGIF, 20);
         } else {
-            interval_id = interval.set(draw);
+            interval_id = interval.set(draw, 20);
         }
     }
     var startTime;

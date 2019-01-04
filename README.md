@@ -1,17 +1,18 @@
 # favloader
 
-[![npm](https://img.shields.io/badge/npm-0.3.0-blue.svg)](https://www.npmjs.com/package/favloader)
+[![npm](https://img.shields.io/badge/npm-0.3.1-blue.svg)](https://www.npmjs.com/package/favloader)
 [![MIT badge](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/jcubic/favloader/blob/master/LICENSE)
 
 Vanilla JavaScript library for loading animation in favicon that work when tab is not active
 
 ## Why this library
 
-Basic solution with animation using canvas don't work out of the box because of limitation of timer functions in Browsers' main
-Thread. The library use web worker to create timer that don't stop when tab is not in focus.
+Basic solution with animation using canvas don't work out of the box because of limitation
+of timer functions in Browsers' main Thread. The library use web worker to create timer
+that don't stop when tab is not in focus.
 
-You can use this library if you have time consuming calculation and people switch tabs and you wan them to be notified when
-application finish whatever it was doing.
+You can use this library if you have time consuming calculation and people switch tabs and
+you wan them to be notified when application finish whatever it was doing.
 
 ## Installation
 
@@ -88,6 +89,6 @@ To restore the icon properly, after stop, you need to include default favicon:
 
 ## License
 
-Copyright (c) 2018 Jakub T. Jankiewicz <https://jcubic.pl/me>
+Copyright (c) 2018-2019 Jakub T. Jankiewicz <https://jcubic.pl/me>
 
 Released under the MIT license
