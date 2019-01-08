@@ -5,7 +5,7 @@
 
 Vanilla JavaScript library for loading animation in favicon that work when tab is not active
 
-See [Demo](https://jcubic.github.io/jcubic/favloader/)
+See [Demo](https://jcubic.github.io/favloader/)
 
 ## Why this library
 
