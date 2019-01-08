@@ -13,9 +13,9 @@
 </head>
 <body>
   <select>
-    <option selected value="gen">generated</option>
+    <option selected value="default">default</option>
     <option value="gif">gif</option>
-    <option value="canvas">custom draw</option>
+    <option value="custom">custom</option>
   </select>
   <button>Toggle</button>
   <script>
@@ -31,7 +31,7 @@
            favloader.init({
                gif: 'examples/loader.gif'
            });
-       } else if (e.target.value === 'canvas') {
+       } else if (e.target.value === 'custom') {
            var increase = Math.PI * 2 / 100;
            var max = Math.PI * 2;
            var angle = 0.0000001;
