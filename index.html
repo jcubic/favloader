@@ -1,0 +1,78 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Example of Favloader</title>
+    <meta name="Description" content=""/>
+    <!--[if IE]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link rel="icon" type="image/x-icon" href="favicon.ico"/>
+    <script src="../favloader.js"></script>
+    <script src="../parseGIF.js"></script>
+</head>
+<body>
+  <select>
+    <option selected value="gen">generated</option>
+    <option value="gif">gif</option>
+    <option value="canvas">custom draw</option>
+  </select>
+  <button>Toggle</button>
+  <script>
+   favloader.init({
+       color: 'red'
+   });
+   var enabled = false;
+   document.querySelector('select').addEventListener('change', function(e) {
+       if (enabled) {
+           favloader.stop();
+       }
+       if (e.target.value == 'gif') {
+           favloader.init({
+               gif: 'loader.gif'
+           });
+       } if (e.target.value === 'canvas') {
+           var increase = Math.PI * 2 / 100;
+           var max = Math.PI * 2;
+           var angle = 0.0000001;
+           var start = false;
+           favloader.init({
+               size: 32,
+               radius: 12,
+               frame: function(ctx) {
+                   ctx.fillStyle = '#0F60A8';
+                   ctx.beginPath();
+                   if (start) {
+                       ctx.arc(16, 16, 12, angle, 0);
+                   } else {
+                       ctx.arc(16, 16, 12, 0, angle);
+                   }
+                   ctx.lineTo(16, 16);
+                   ctx.fill();
+                   angle += increase;
+                   if (angle >= max) {
+                       angle %= max;
+                       start = !start;
+                   }
+               }
+           });
+       } else {
+           favloader.init({
+               color: 'red'
+           });
+       }
+       if (enabled) {
+           favloader.start();
+       }
+   });
+   document.querySelector('button').addEventListener('click', function() {
+       if (!enabled) {
+           favloader.start();
+       } else {
+           favloader.stop();
+       }
+       enabled = !enabled;
+   });
+  </script>
+</body>
+</html>
