@@ -1,9 +1,11 @@
 # favloader
 
-[![npm](https://img.shields.io/badge/npm-0.3.1-blue.svg)](https://www.npmjs.com/package/favloader)
+[![npm](https://img.shields.io/badge/npm-0.4.1-blue.svg)](https://www.npmjs.com/package/favloader)
 [![MIT badge](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/jcubic/favloader/blob/master/LICENSE)
 
 Vanilla JavaScript library for loading animation in favicon that work when tab is not active
+
+See [Demo](https://jcubic.github.io/jcubic/favloader/)
 
 ## Why this library
 
@@ -64,6 +66,35 @@ favloader.init({
 });
 ```
 
+## Custom canvas animation
+
+From version 0.4.0 you can use custom canvas animation
+
+```javascript
+var p = 0;
+var reversed = false;
+var width = 2;
+var size = 32;
+favloader.init({
+  size: size,
+  frame: function(ctx) {
+    ctx.fillStyle = '#F00A0A';
+    ctx.fillRect(p, 0, width, size);
+    if (reversed) {
+      p--;
+      if (p === 0) {
+        reversed = false;
+      }
+    } else {
+      p++;
+      if (p === size - width) {
+        reversed = true;
+      }
+    }
+  }
+});
+```
+
 ## Animation
 
 
@@ -88,6 +119,12 @@ To restore the icon properly, after stop, you need to include default favicon:
 ```
 
 ## Changelog
+
+### 0.4.1
+* README fix
+
+### 0.4.0
+* canvas animation
 
 ### 0.3.1
 * fix for MacOSX/Chrome

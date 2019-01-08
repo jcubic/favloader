@@ -120,6 +120,12 @@ To restore the icon properly, after stop, you need to include default favicon:
 
 ## Changelog
 
+### 0.4.1
+* README fix
+
+### 0.4.0
+* canvas animation
+
 ### 0.3.1
 * fix for MacOSX/Chrome
 * fix initialization before DOM is ready
