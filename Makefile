@@ -1,12 +1,18 @@
+.PHONY: test-publish publish
+
 VERSION=0.4.0
 DATE=`date -uR`
 UGLIFY=./node_modules/.bin/uglifyjs
 SED=sed
+NPM=npm
 
-ALL: .$(VERSION) favloader.min.js
+ALL: .$(VERSION) favloader.min.js README.md package.json
 
 favloader.js: favloader-src.js .$(VERSION)
 	$(SED) -e "s/{{VER}}/$(VERSION)/g" -e "s/{{DATE}}/$(DATE)/g" favloader-src.js > favloader.js
+
+package.json: templates/package.json .$(VERSION)
+	$(SED) -e "s/{{VER}}/"$(VERSION)"/" templates/package.json > package.json || true
 
 favloader.min.js: favloader.js
 	$(UGLIFY) -o favloader.min.js --comments --mangle -- favloader.js
@@ -16,3 +22,6 @@ favloader.min.js: favloader.js
 
 publish:
 	$(NPM) publish --access=public
+
+test-publish:
+	$(NPM) publish --dry-run

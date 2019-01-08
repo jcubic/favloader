@@ -1,5 +1,6 @@
 examples
 bower.json
+.[0-9]*
 *~
 \#*
 .\#*

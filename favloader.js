@@ -7,7 +7,7 @@
  * Copyright (c) 2018-2019 Jakub T. Jankiewicz <https://jcubic.pl/me>
  * Released under the MIT license
  *
- * Build: Tue, 08 Jan 2019 11:53:06 +0000
+ * Build: Tue, 08 Jan 2019 12:04:53 +0000
  */
 /* global define, module, global, Worker, Blob, BlobBuilder, setTimeout, parseGIF */
 (function(factory) {
