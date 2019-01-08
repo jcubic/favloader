@@ -1,8 +1,9 @@
 {
   "name": "favloader",
-  "version": "0.3.1",
+  "version": "{{VER}}",
   "description": "Favicon Vanilla JavaScript loader animation that work when tab is not active",
   "main": "favloader.js",
+  "unpkg": "favloader.min.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jcubic/favloader.git"

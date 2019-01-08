@@ -15,6 +15,7 @@
   <select>
     <option selected value="gen">generated</option>
     <option value="gif">gif</option>
+    <option value="canvas">custom draw</option>
   </select>
   <button>Toggle</button>
   <script>
@@ -29,6 +30,31 @@
        if (e.target.value == 'gif') {
            favloader.init({
                gif: 'loader.gif'
+           });
+       } if (e.target.value === 'canvas') {
+           var increase = Math.PI * 2 / 100;
+           var max = Math.PI * 2;
+           var angle = 0.0000001;
+           var start = false;
+           favloader.init({
+               size: 32,
+               radius: 12,
+               frame: function(ctx) {
+                   ctx.fillStyle = '#0F60A8';
+                   ctx.beginPath();
+                   if (start) {
+                       ctx.arc(16, 16, 12, angle, 0);
+                   } else {
+                       ctx.arc(16, 16, 12, 0, angle);
+                   }
+                   ctx.lineTo(16, 16);
+                   ctx.fill();
+                   angle += increase;
+                   if (angle >= max) {
+                       angle %= max;
+                       start = !start;
+                   }
+               }
            });
        } else {
            favloader.init({

@@ -4,3 +4,8 @@ bower.json
 \#*
 .\#*
 tmp
+templates
+Makefile
+favloader-src.js
+version
+node_modules
