@@ -5,7 +5,7 @@
 
 Vanilla JavaScript library for loading animation in favicon that work when tab is not active
 
-See [Demo](https://jcubic.github.io/jcubic/favloader/)
+See [Demo](https://jcubic.github.io/favloader/)
 
 ## Why this library
 
@@ -119,6 +119,12 @@ To restore the icon properly, after stop, you need to include default favicon:
 ```
 
 ## Changelog
+
+### 0.4.1
+* README fix
+
+### 0.4.0
+* canvas animation
 
 ### 0.3.1
 * fix for MacOSX/Chrome
