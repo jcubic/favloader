@@ -174,6 +174,8 @@
             }
         }
 
+        clear();
+
         if (settings.gif) {
             if (typeof parseGIF === 'undefined') {
                 throw new Error('parseGIF not defined, please include parseGIF.js file');
@@ -196,6 +198,13 @@
         initialized = true;
     }
     // ----------------------------------------------------------------------------------
+    function clear() {
+        if (interval_id) {
+            interval.clear(interval_id);
+            interval_id = null;
+        }
+    }
+    // ----------------------------------------------------------------------------------
     function restore() {
         if (icon) {
             link.setAttribute('href', icon + '?' + Date.now());
@@ -203,7 +212,7 @@
         } else {
             link.parentNode.removeChild(link);
         }
-        interval.clear(interval_id);
+        clear();
     }
     // ----------------------------------------------------------------------------------
     function animate() {

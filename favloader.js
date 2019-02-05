@@ -1,13 +1,13 @@
 /**@license
  *
- * favloader v. 0.4.1
+ * favloader v. 0.4.2
  *
  * Vanilla JavaScript library for loading animation in favicon
  *
  * Copyright (c) 2018-2019 Jakub T. Jankiewicz <https://jcubic.pl/me>
  * Released under the MIT license
  *
- * Build: Tue, 08 Jan 2019 12:29:18 +0000
+ * Build: Tue, 05 Feb 2019 09:57:45 +0000
  */
 /* global define, module, global, Worker, Blob, BlobBuilder, setTimeout, parseGIF */
 (function(factory) {
@@ -174,6 +174,8 @@
             }
         }
 
+        clear();
+
         if (settings.gif) {
             if (typeof parseGIF === 'undefined') {
                 throw new Error('parseGIF not defined, please include parseGIF.js file');
@@ -196,6 +198,13 @@
         initialized = true;
     }
     // ----------------------------------------------------------------------------------
+    function clear() {
+        if (interval_id) {
+            interval.clear(interval_id);
+            interval_id = null;
+        }
+    }
+    // ----------------------------------------------------------------------------------
     function restore() {
         if (icon) {
             link.setAttribute('href', icon + '?' + Date.now());
@@ -203,7 +212,7 @@
         } else {
             link.parentNode.removeChild(link);
         }
-        interval.clear(interval_id);
+        clear();
     }
     // ----------------------------------------------------------------------------------
     function animate() {
@@ -269,6 +278,6 @@
         init: init,
         start: animate,
         stop: restore,
-        version: '0.4.1'
+        version: '0.4.2'
     };
 });

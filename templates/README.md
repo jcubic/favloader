@@ -120,6 +120,9 @@ To restore the icon properly, after stop, you need to include default favicon:
 
 ## Changelog
 
+### 0.4.2
+* fix clear of animation when calling init when animation is running
+
 ### 0.4.1
 * README fix
 * add parseGIF.min.js file
