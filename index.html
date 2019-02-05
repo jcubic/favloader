@@ -9,7 +9,7 @@
     <![endif]-->
     <link rel="icon" type="image/x-icon" href="favicon.ico"/>
     <script src="https://unpkg.com/favloader"></script>
-    <script src="https://unpkg.com/favloader/parseGIF.js"></script>
+    <script src="https://unpkg.com/favloader@0.4.1/parseGIF.js"></script>
 </head>
 <body>
   <select>
@@ -40,6 +40,11 @@
                size: 32,
                radius: 12,
                frame: function(ctx) {
+                   ctx.strokeStyle = '#0F60A8';
+                   ctx.beginPath();
+                   ctx.arc(16, 16, 12, 0, 2 * Math.PI);
+                   ctx.stroke();
+
                    ctx.fillStyle = '#0F60A8';
                    ctx.beginPath();
                    if (start) {
