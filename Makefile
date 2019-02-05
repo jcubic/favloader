@@ -6,7 +6,7 @@ UGLIFY=./node_modules/.bin/uglifyjs
 SED=sed
 NPM=npm
 
-ALL: .$(VERSION) favloader.min.js README.md package.json
+ALL: .$(VERSION) favloader.min.js parseGIF.min.js README.md package.json
 
 favloader.js: favloader-src.js .$(VERSION)
 	$(SED) -e "s/{{VER}}/$(VERSION)/g" -e "s/{{DATE}}/$(DATE)/g" favloader-src.js > favloader.js
@@ -19,6 +19,9 @@ package.json: templates/package.json .$(VERSION)
 
 favloader.min.js: favloader.js
 	$(UGLIFY) -o favloader.min.js --comments --mangle -- favloader.js
+
+parseGIF.min.js: parseGIF.js
+	$(UGLIFY) -o parseGIF.min.js --comments --mangle -- parseGIF.js
 
 .$(VERSION): Makefile
 	touch .$(VERSION)

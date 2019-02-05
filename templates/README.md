@@ -122,6 +122,7 @@ To restore the icon properly, after stop, you need to include default favicon:
 
 ### 0.4.1
 * README fix
+* add parseGIF.min.js file
 
 ### 0.4.0
 * canvas animation
