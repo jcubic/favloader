@@ -209,13 +209,16 @@
         if (icon) {
             link.setAttribute('href', icon + '?' + Date.now());
             link.setAttribute('type', type);
-        } else {
+        } else if (link) {
             link.parentNode.removeChild(link);
         }
         clear();
     }
     // ----------------------------------------------------------------------------------
     function animate() {
+        if (!link) {
+            throw new Error('[Favaloder] You need to call init first');
+        }
         if (!initialized) {
             setTimeout(animate, 100);
             return;

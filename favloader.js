@@ -1,13 +1,13 @@
 /**@license
  *
- * favloader v. 0.4.2
+ * favloader v. 0.4.3
  *
  * Vanilla JavaScript library for loading animation in favicon
  *
  * Copyright (c) 2018-2019 Jakub T. Jankiewicz <https://jcubic.pl/me>
  * Released under the MIT license
  *
- * Build: Tue, 05 Feb 2019 09:57:45 +0000
+ * Build: Mon, 04 Nov 2019 15:53:12 +0000
  */
 /* global define, module, global, Worker, Blob, BlobBuilder, setTimeout, parseGIF */
 (function(factory) {
@@ -209,13 +209,16 @@
         if (icon) {
             link.setAttribute('href', icon + '?' + Date.now());
             link.setAttribute('type', type);
-        } else {
+        } else if (link) {
             link.parentNode.removeChild(link);
         }
         clear();
     }
     // ----------------------------------------------------------------------------------
     function animate() {
+        if (!link) {
+            throw new Error('[Favaloder] You need to call init first');
+        }
         if (!initialized) {
             setTimeout(animate, 100);
             return;
@@ -278,6 +281,6 @@
         init: init,
         start: animate,
         stop: restore,
-        version: '0.4.2'
+        version: '0.4.3'
     };
 });
