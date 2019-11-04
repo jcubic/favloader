@@ -1,12 +1,12 @@
 .PHONY: test-publish publish
 
-VERSION="0.4.2"
+VERSION=0.4.3
 DATE=`date -uR`
 UGLIFY=./node_modules/.bin/uglifyjs
 SED=sed
 NPM=npm
 
-ALL: .$(VERSION) favloader.min.js parseGIF.min.js README.md package.json
+ALL: favloader.min.js parseGIF.min.js README.md package.json
 
 favloader.js: favloader-src.js .$(VERSION)
 	$(SED) -e "s/{{VER}}/$(VERSION)/g" -e "s/{{DATE}}/$(DATE)/g" favloader-src.js > favloader.js
