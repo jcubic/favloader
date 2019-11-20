@@ -1,6 +1,6 @@
 # favloader
 
-[![npm](https://img.shields.io/badge/npm-0.4.3-blue.svg)](https://www.npmjs.com/package/favloader)
+[![npm](https://img.shields.io/badge/npm-0.4.4-blue.svg)](https://www.npmjs.com/package/favloader)
 [![MIT badge](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/jcubic/favloader/blob/master/LICENSE)
 
 Vanilla JavaScript library for loading animation in favicon that work when tab is not active
@@ -120,8 +120,11 @@ To restore the icon properly, after stop, you need to include default favicon:
 
 ## Changelog
 
-### 0.4.3
+### 0.4.4
 * allow of multiple start before initialization
+
+### 0.4.3
+* throw error when calling start before init
 
 ### 0.4.2
 * fix clear of animation when calling init when animation is running

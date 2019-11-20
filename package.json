@@ -1,6 +1,6 @@
 {
   "name": "favloader",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "description": "Favicon Vanilla JavaScript loader animation that work when tab is not active",
   "main": "favloader.js",
   "unpkg": "favloader.min.js",

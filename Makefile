@@ -1,6 +1,6 @@
 .PHONY: test-publish publish
 
-VERSION=0.4.3
+VERSION=0.4.4
 DATE=`date -uR`
 UGLIFY=./node_modules/.bin/uglifyjs
 SED=sed

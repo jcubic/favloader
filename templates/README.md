@@ -120,8 +120,11 @@ To restore the icon properly, after stop, you need to include default favicon:
 
 ## Changelog
 
-### 0.4.3
+### 0.4.4
 * allow of multiple start before initialization
+
+### 0.4.3
+* throw error when calling start before init
 
 ### 0.4.2
 * fix clear of animation when calling init when animation is running
