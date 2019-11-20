@@ -216,11 +216,11 @@
     }
     // ----------------------------------------------------------------------------------
     function animate() {
-        if (!link) {
-            throw new Error('[Favaloder] You need to call init first');
-        }
         if (!initialized) {
             setTimeout(animate, 100);
+            return;
+        }
+        if (interval_id) {
             return;
         }
         progress = 0;

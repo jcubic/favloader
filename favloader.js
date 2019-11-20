@@ -7,7 +7,7 @@
  * Copyright (c) 2018-2019 Jakub T. Jankiewicz <https://jcubic.pl/me>
  * Released under the MIT license
  *
- * Build: Mon, 04 Nov 2019 15:53:12 +0000
+ * Build: Wed, 20 Nov 2019 13:03:10 +0000
  */
 /* global define, module, global, Worker, Blob, BlobBuilder, setTimeout, parseGIF */
 (function(factory) {
@@ -216,11 +216,11 @@
     }
     // ----------------------------------------------------------------------------------
     function animate() {
-        if (!link) {
-            throw new Error('[Favaloder] You need to call init first');
-        }
         if (!initialized) {
             setTimeout(animate, 100);
+            return;
+        }
+        if (interval_id) {
             return;
         }
         progress = 0;
