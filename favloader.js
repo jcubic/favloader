@@ -7,7 +7,7 @@
  * Copyright (c) 2018-2019 Jakub T. Jankiewicz <https://jcubic.pl/me>
  * Released under the MIT license
  *
- * Build: Wed, 20 Nov 2019 13:06:21 +0000
+ * Build: Sat, 22 May 2021 11:37:31 +0000
  */
 /* global define, module, global, Worker, Blob, BlobBuilder, setTimeout, parseGIF */
 (function(factory) {
@@ -63,10 +63,19 @@
                 }
                 if (data.method == 'setInterval') {
                     var interval_id = data.params[0];
-                    raf[interval_id] = self.setInterval(function() {
-                        self.postMessage({ type: 'interval', id: interval_id });
-                    }, data.params[1]);
-                    self.postMessage({ type: 'RPC', id: id, result: interval_id });
+                    if (typeof interval_id === 'number') {
+                        raf[interval_id] = self.setInterval(function() {
+                            self.postMessage({ type: 'interval', id: interval_id });
+                        }, data.params[1]);
+                        self.postMessage({ type: 'RPC', id: id, result: interval_id });
+                    } else {
+                        self.postMessage({
+                            type: 'RPC',
+                            id: id,
+                            result: null,
+                            error: 'Invalid Argument, expected number'
+                        });
+                    }
                 } else if (data.method == 'clearInterval') {
                     self.clearInterval(raf[data.params[0]]);
                     delete raf[data.params[0]];
@@ -78,11 +87,15 @@
             var id = 0;
             return function rpc(method, params) {
                 var _id = ++id;
-                return new Promise(function(resolve) {
+                return new Promise(function(resolve, reject) {
                     worker.addEventListener('message', function handler(response) {
                         var data = response.data;
                         if (data && data.type === 'RPC' && data.id === _id) {
-                            resolve(data.result);
+                            if (data.error) {
+                                reject(data.error);
+                            } else {
+                                resolve(data.result);
+                            }
                             worker.removeEventListener('message', handler);
                         }
                     });

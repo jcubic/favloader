@@ -1,6 +1,4 @@
-![Favloader Logo](https://github.com/jcubic/favloader/blob/master/assets/logo.svg?raw=true)
-
-# Favicon Animation Library
+# favloader
 
 [![npm](https://img.shields.io/badge/npm-0.4.4-blue.svg)](https://www.npmjs.com/package/favloader)
 [![MIT badge](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/jcubic/favloader/blob/master/LICENSE)
@@ -29,13 +27,7 @@ You can using webpack to include the files (using `require`) use local file in s
 you can also get the file from unpkg.com:
 
 ```html
-<script src="https://unpkg.com/favloader"></script>
-```
-
-or jsDelivery, that automatically minify the code:
-
-```
-<script src="https://cdn.jsdelivr.net/npm/favloader"></script>
+<script src="https://unpkg.com/favloader@0.x.x"></script>
 ```
 
 ## API
