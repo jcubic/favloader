@@ -1,5 +1,7 @@
 # favloader
 
+![Favloader logo](https://github.com/jcubic/favloader/blob/master/assets/logo.svg?raw=true)
+
 [![npm](https://img.shields.io/badge/npm-0.4.4-blue.svg)](https://www.npmjs.com/package/favloader)
 [![MIT badge](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/jcubic/favloader/blob/master/LICENSE)
 
